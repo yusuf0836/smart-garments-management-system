@@ -13,6 +13,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
+
+    // Employee
+    Route::resource('employees', \App\Http\Controllers\Admin\EmployeeController::class);
+
+    // Attendance
+    Route::get('/attendance', [\App\Http\Controllers\Admin\AttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('/attendance', [\App\Http\Controllers\Admin\AttendanceController::class, 'store'])->name('attendance.store');
 });
 
 // Manager Routes
@@ -29,3 +36,4 @@ Route::middleware(['auth', 'role:worker'])->prefix('worker')->name('worker.')->g
 Route::middleware(['auth', 'role:buyer'])->prefix('buyer')->name('buyer.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'buyer'])->name('dashboard');
 });
+
