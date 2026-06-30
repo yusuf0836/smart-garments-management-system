@@ -54,8 +54,30 @@
             margin-bottom: 12px;
         }
 
-        .sidebar-nav { padding: 16px 0; flex: 1; }
+        .sidebar-nav {
+            padding: 16px 0;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: calc(100vh - 200px);
+        }
 
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.4);
+        }
         .nav-section-title {
             font-size: 10px;
             font-weight: 700;
@@ -241,8 +263,48 @@
         <p>Management System</p>
     </div>
 
+    {{-- ── Sidebar Nav ── --}}
     <nav class="sidebar-nav">
-        @yield('sidebar-menu')
+        <div class="nav-section-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}"
+        class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+
+        <div class="nav-section-title">Management</div>
+        <a href="{{ route('admin.employees.index') }}"
+        class="nav-link {{ request()->routeIs('admin.employees.*') ? 'active' : '' }}">
+            <i class="bi bi-people"></i> Employees
+        </a>
+        <a href="{{ route('admin.attendance.index') }}"
+        class="nav-link {{ request()->routeIs('admin.attendance.*') ? 'active' : '' }}">
+            <i class="bi bi-calendar-check"></i> Attendance
+        </a>
+        <a href="{{ route('admin.inventory.index') }}"
+        class="nav-link {{ request()->routeIs('admin.inventory.*') ? 'active' : '' }}">
+            <i class="bi bi-box-seam"></i> Inventory
+        </a>
+        <a href="{{ route('admin.suppliers.index') }}"
+        class="nav-link {{ request()->routeIs('admin.suppliers.*') ? 'active' : '' }}">
+            <i class="bi bi-truck"></i> Suppliers
+        </a>
+        <a href="#"
+        class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+            <i class="bi bi-clipboard-check"></i> Orders
+        </a>
+        <a href="#"
+        class="nav-link {{ request()->routeIs('admin.production.*') ? 'active' : '' }}">
+            <i class="bi bi-diagram-3"></i> Production
+        </a>
+
+        <div class="nav-section-title">Reports</div>
+        <a href="#"
+        class="nav-link {{ request()->routeIs('admin.analytics.*') ? 'active' : '' }}">
+            <i class="bi bi-bar-chart"></i> Analytics
+        </a>
+        <a href="#" class="nav-link">
+            <i class="bi bi-gear"></i> Settings
+        </a>
     </nav>
 
     <div class="sidebar-user">

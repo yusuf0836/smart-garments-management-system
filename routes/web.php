@@ -20,6 +20,21 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Attendance
     Route::get('/attendance', [\App\Http\Controllers\Admin\AttendanceController::class, 'index'])->name('attendance.index');
     Route::post('/attendance', [\App\Http\Controllers\Admin\AttendanceController::class, 'store'])->name('attendance.store');
+    // Inventory
+    Route::resource('inventory', \App\Http\Controllers\Admin\InventoryController::class);
+    Route::post('/inventory/{inventory}/stock-in', [\App\Http\Controllers\Admin\InventoryController::class, 'stockIn'])->name('inventory.stock-in');
+    Route::post('/inventory/{inventory}/stock-out', [\App\Http\Controllers\Admin\InventoryController::class, 'stockOut'])->name('inventory.stock-out');
+    Route::get('/inventory/{inventory}/transactions', [\App\Http\Controllers\Admin\InventoryController::class, 'transactions'])->name('inventory.transactions');
+
+    // Stock Transactions
+    Route::get('/stock', [\App\Http\Controllers\Admin\StockController::class, 'index'])->name('stock.index');
+    Route::post('/stock', [\App\Http\Controllers\Admin\StockController::class, 'store'])->name('stock.store');
+
+    // Suppliers
+    Route::resource('suppliers', \App\Http\Controllers\Admin\SupplierController::class);
+    Route::get('/suppliers', [\App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('suppliers.index');
+    Route::post('/suppliers', [\App\Http\Controllers\Admin\SupplierController::class, 'store'])->name('suppliers.store');
+    Route::delete('/suppliers/{supplier}', [\App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('suppliers.destroy');
 });
 
 // Manager Routes
@@ -36,4 +51,3 @@ Route::middleware(['auth', 'role:worker'])->prefix('worker')->name('worker.')->g
 Route::middleware(['auth', 'role:buyer'])->prefix('buyer')->name('buyer.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'buyer'])->name('dashboard');
 });
-
